@@ -1,0 +1,43 @@
+################################################################################################################################################################################################################
+# Title : README to use the 5nm Synopsys RM flow for Synthesis (originally made for Firefish_POC/MAKO_PoC)												       #
+# Author : Ajay Kumar Ganesha <ajay.ganesha@nokia.com>																			       #
+# Date : 03/12/2021																							       #
+# Version : 1 																								       #
+################################################################################################################################################################################################################
+
+* Open the ./rm_setup/common_setup.tcl
+* Change the DESIGN_NAME to your design's top module name & save the file.
+
+* Open the ./rm_setup/dc_setup_filenames.tcl
+* If there is a floorplan DEF file for your synthesis run, you can provide the path of the DEF file to this variable "DCRM_DCT_DEF_INPUT_FILE".
+* Save the file after making changes.
+
+* Populate the RTL codes in the filelists with the names shown below based on their format in the current working directory.
+	:-filelist_sv.f , filelist_v.f & filelist_vhd.f
+
+* If The RTL files are from a common path, the initial common path can be hidden by the variable $MODULES_PATH, the flow would then get the value by the unix environmental
+variable set to this path.
+
+
+* A basic constraints template will be present in the working directory by the name design_name.constraints.tcl, do rename that file with your design's top module name and change the
+contents of the constraints file to match your design's clock port name(s) & their respective frequencies (time period).
+
+* Load the modules to get the lsf & designcompiler paths set to the terminal by executing the below commands. (You can switch to the latest release of designcompiler by changing the version)
+module load lsf
+module load designcompiler/Q_2019_12_SP4
+module load iccompiler_II/Q_2019_12_SP5
+
+* After doing all these changes, To kickstart the synthesis run. just parse the file run_dc.sh on the terminal (dont use source command)
+
+* To check the timing summary of your run, after the synthesis run is over. Open this file --> reports/QOR_SUMMARY.rpt
+
+* To check the area numbers based on hierarchy, Open this file on soffice/MS Excel --> reports/area_hier.csv
+
+* To check the instance count, design area and other metrics. Open this file --> reports/<DESIGN_NAME>.mapped.area.rpt
+
+* If you want to interactively open the synthesized database on the designcompiler, parse this file on the unix shell open_dc.sh (dont use source command)
+* Once the dcnxt_shell> is up, type this command to read in the database --> read_ddc results/<DESIGN_NAME>.mapped.ddc
+
+################################################################################################################################################################################################################
+#												-The End | Mukthaaya-							  				       #
+################################################################################################################################################################################################################
